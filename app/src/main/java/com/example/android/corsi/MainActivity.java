@@ -1,57 +1,50 @@
 package com.example.android.corsi;
 
+//import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView mTextMessage;
 
     ViewPager viewPager;
     LinearLayout sliderDotspanel;
     private int dotscount;
     private ImageView[] dots;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
-
-                    return true;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
-                    return true;
-                case R.id.navigation_downloads:
-                    mTextMessage.setText(R.string.title_downloads);
-                    return true;
-                case R.id.navigation_settings:
-                    mTextMessage.setText(R.string.title_settings);
-                    return true;
-            }
-            return false;
-        }
-    };
+    /* the error is over here*/
+//    private void setFragment(Fragment fragment) {
+//        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+//        fragmentTransaction.replace(R.id.main_frame, fragment);
+//        fragmentTransaction.commit();
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        //to start on the home by defult
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame,
+                new HomeFragment()).commit();
+
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
 
@@ -102,5 +95,31 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    //when click on a button it replace the frame view with the fragment that concerned with the view
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Fragment selectedFragment = null;
+
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    selectedFragment = new HomeFragment();
+                    break;
+                case R.id.navigation_dashboard:
+                    selectedFragment = new DashBoardFragment();
+                    break;
+                case R.id.navigation_downloads:
+                    selectedFragment = new DownLoadsFragment();
+                    break;
+                case R.id.navigation_settings:
+                    selectedFragment = new SettingsFragment();
+                    break;
+            }
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, selectedFragment).commit();
+            return true;
+        }
+    };
 
 }
