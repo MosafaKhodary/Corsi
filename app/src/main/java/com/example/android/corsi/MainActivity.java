@@ -1,125 +1,66 @@
 package com.example.android.corsi;
 
-//import android.app.Fragment;
-import android.app.FragmentTransaction;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private BottomNavigationView mMainNav;
+//    private FrameLayout mMainFrame;
 
-    ViewPager viewPager;
-    LinearLayout sliderDotspanel;
-    private int dotscount;
-    private ImageView[] dots;
+//    private HomeFragment homeFragment;
+//    private DashboardFragment dashboardFragment;
+//    private DoenlaodsFragment doenlaodsFragment;
+//    private SettingsFragment settingsFragment;
 
 
-    /* the error is over here*/
-//    private void setFragment(Fragment fragment) {
-//        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-//        fragmentTransaction.replace(R.id.main_frame, fragment);
-//        fragmentTransaction.commit();
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        mMainFrame = (FrameLayout)findViewById(R.id.fragment_container);
+        mMainNav = (BottomNavigationView) findViewById(R.id.bottom_navigation);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+//        homeFragment = new HomeFragment();
+//        dashboardFragment =new DashboardFragment();
+//        doenlaodsFragment =new DoenlaodsFragment();
+//        settingsFragment =new SettingsFragment();
 
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        mMainNav.setOnNavigationItemSelectedListener(navListener);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container , new HomeFragment() ).commit();
 
-        //to start on the home by defult
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame,
-                new HomeFragment()).commit();
-
-
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
-
-        sliderDotspanel = (LinearLayout) findViewById(R.id.SliderDots);
-
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this);
-
-        viewPager.setAdapter(viewPagerAdapter);
-
-        dotscount = viewPagerAdapter.getCount();
-        dots = new ImageView[dotscount];
-
-        for(int i = 0; i < dotscount; i++){
-
-            dots[i] = new ImageView(this);
-            dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.non_active_dot));
-
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-            params.setMargins(8, 0, 8, 0);
-
-            sliderDotspanel.addView(dots[i], params);
-
-        }
-
-        dots[0].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
-
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-                for(int i = 0; i< dotscount; i++){
-                    dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.non_active_dot));
-                }
-
-                dots[position].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
     }
 
-    //when click on a button it replace the frame view with the fragment that concerned with the view
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
             Fragment selectedFragment = null;
-
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    selectedFragment = new HomeFragment();
+            switch (menuItem.getItemId()){
+                case R.id.nav_home:
+                    selectedFragment =new HomeFragment();
                     break;
-                case R.id.navigation_dashboard:
-                    selectedFragment = new DashBoardFragment();
+                case R.id.nav_dash_board :
+                    selectedFragment = new DashboardFragment();
                     break;
-                case R.id.navigation_downloads:
-                    selectedFragment = new DownLoadsFragment();
+                case R.id.nav_downloads :
+                    selectedFragment = new DoenlaodsFragment();
                     break;
-                case R.id.navigation_settings:
+                case R.id.nav_settings :
                     selectedFragment = new SettingsFragment();
                     break;
             }
-            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, selectedFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container , selectedFragment ).commit();
             return true;
         }
     };
-
 }
