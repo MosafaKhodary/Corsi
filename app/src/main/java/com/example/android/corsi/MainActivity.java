@@ -3,13 +3,9 @@ package com.example.android.corsi;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
 
 //    private HomeFragment homeFragment;
 //    private DashboardFragment dashboardFragment;
-//    private DoenlaodsFragment doenlaodsFragment;
+//    private DownloadsFragment doenlaodsFragment;
 //    private SettingsFragment settingsFragment;
 
 
@@ -33,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
 //        homeFragment = new HomeFragment();
 //        dashboardFragment =new DashboardFragment();
-//        doenlaodsFragment =new DoenlaodsFragment();
+//        doenlaodsFragment =new DownloadsFragment();
 //        settingsFragment =new SettingsFragment();
 
         mMainNav.setOnNavigationItemSelectedListener(navListener);
@@ -53,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = new DashboardFragment();
                     break;
                 case R.id.nav_downloads :
-                    selectedFragment = new DoenlaodsFragment();
+                    selectedFragment = new DownloadsFragment();
                     break;
                 case R.id.nav_settings :
                     selectedFragment = new SettingsFragment();
