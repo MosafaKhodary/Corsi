@@ -65,7 +65,10 @@
                     android:background="@drawable/inp_rou"
                     android:padding="8dp"
                     android:textColorHint="#626262"
-                    android:layout_marginTop="10dp"/>
+                    android:textColor="#626262"
+                    android:layout_marginTop="10dp"
+                    android:inputType="textPersonName"
+                    android:drawableStart="@drawable/logo"/>
 
                 <EditText
                     android:layout_width="220dp"
@@ -75,7 +78,9 @@
                     android:background="@drawable/inp_rou"
                     android:padding="8dp"
                     android:textColorHint="#626262"
-                    android:layout_marginTop="15dp"/>
+                    android:textColor="#626262"
+                    android:layout_marginTop="15dp"
+                    android:inputType="textPassword" />
 
                 <Button
                     android:id="@+id/login_btn"
